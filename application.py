@@ -22,3 +22,6 @@ class Application:
         self.date_applied = date_applied
         self.job_url = job_url
         self.notes = notes
+
+    def __str__(self):
+        return f"{self.company} - {self.position} - {self.status}"
