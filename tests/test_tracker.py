@@ -90,3 +90,46 @@ def test_delete_middle_application():
     assert application2 not in tracker.applications
     assert application1 in tracker.applications
     assert application3 in tracker.applications
+
+def test_tracker_update_status():
+    tracker = Tracker()
+
+    application = Application(
+        1,
+        "Google",
+        "Software Engineer Intern",
+        "Applied",
+        "2026-08-21",
+        "https://careers.google.com",
+        ""
+    )
+
+    tracker.add(application)
+
+    tracker.update_status(1, "Interview")
+
+    assert application.status == "Interview"
+
+def test_tracker_update_invalid_status():
+    tracker = Tracker()
+
+    application = Application(
+        1,
+        "Google",
+        "Software Engineer Intern",
+        "Applied",
+        "2026-08-21",
+        "https://careers.google.com",
+        ""
+    )
+
+    tracker.add(application)
+
+    with pytest.raises(ValueError):
+        tracker.update_status(1, "Banana")
+
+def test_tracker_update_invalid_id():
+    tracker = Tracker()
+
+    with pytest.raises(ValueError):
+        tracker.update_status(99, "Interview")

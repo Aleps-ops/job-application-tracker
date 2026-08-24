@@ -20,3 +20,10 @@ class Tracker:
                 return
 
         raise ValueError("Application not found")
+
+    def update_status(self, application_id: int, status: str):
+        for application in self.applications:
+            if application.id == application_id:
+                application.update_status(status)
+                return
+        raise ValueError("Application not found")

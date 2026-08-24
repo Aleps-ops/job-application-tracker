@@ -12,8 +12,7 @@ class Application:
                  status: str, date_applied: str,
                  job_url: str, notes: str):
 
-        if status not in self.statuses:
-            raise ValueError("Invalid status")
+        self._validate_status(status)
 
         self.id = id
         self.company = company
@@ -25,3 +24,11 @@ class Application:
 
     def __str__(self):
         return f"{self.company} - {self.position} - {self.status}"
+
+    def _validate_status(self, status:str):
+        if status not in self.statuses:
+            raise ValueError("Invalid status")
+
+    def update_status(self, status: str):
+        self._validate_status(status)
+        self.status = status

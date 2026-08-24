@@ -29,3 +29,18 @@ def test_invalid_status():
             "https://careers.microsoft.com",
             ""
         )
+
+def test_update_status():
+    application = Application(
+        1,
+        "Google",
+        "Software Engineer Intern",
+        "Applied",
+        "2026-08-21",
+        "https://careers.google.com",
+        ""
+    )
+
+    application.update_status("Interview")
+
+    assert application.status == "Interview"
