@@ -32,3 +32,14 @@ class Application:
     def update_status(self, status: str):
         self._validate_status(status)
         self.status = status
+
+    def to_dict(self):
+        return {
+            "id" : self.id,
+            "company" : self.company,
+            "position" : self.position,
+            "status" : self.status,
+            "date_applied" : self.date_applied,
+            "job_url" : self.job_url,
+            "notes" : self.notes
+        }
