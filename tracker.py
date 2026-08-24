@@ -27,3 +27,19 @@ class Tracker:
                 application.update_status(status)
                 return
         raise ValueError("Application not found")
+
+    def search(self, query: str):
+        query = query.lower()
+        results = []
+
+        for application in self.applications:
+            if query in application.company.lower() or query in application.position.lower():
+                results.append(application)
+
+        if not results:
+            return "No applications found."
+
+        return "\n".join(
+            f"{result.id}. {result}" 
+            for result in results
+        )

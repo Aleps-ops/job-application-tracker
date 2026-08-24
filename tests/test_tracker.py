@@ -133,3 +133,49 @@ def test_tracker_update_invalid_id():
 
     with pytest.raises(ValueError):
         tracker.update_status(99, "Interview")
+
+def test_search():
+    tracker = Tracker()
+    application = Application(
+            1,
+            "Google",
+            "Software Engineer Intern",
+            "Applied",
+            "2026-08-21",
+            "https://careers.google.com",
+            ""
+        )
+    tracker.add(application)
+    result = tracker.search("google")
+    assert "1. Google - Software Engineer Intern - Applied" in result
+
+    application = Application(
+            2,
+            "Facebook",
+            "Software Engineer Intern",
+            "Applied",
+            "2026-08-21",
+            "https://careers.facebook.com",
+            ""
+        )
+    tracker.add(application)
+    result = tracker.search("facebook")
+    assert "2. Facebook - Software Engineer Intern - Applied" in result
+
+    result = tracker.search("Microsoft")
+    assert result == "No applications found."
+
+def test_search_by_position():
+    tracker = Tracker()
+    application = Application(
+            1,
+            "Google",
+            "Software Engineer Intern",
+            "Applied",
+            "2026-08-21",
+            "https://careers.google.com",
+            ""
+        )
+    tracker.add(application)
+    result = tracker.search("engineer")
+    assert result == "1. Google - Software Engineer Intern - Applied" in result
