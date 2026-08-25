@@ -32,21 +32,31 @@ def main():
 def add_application(tracker):
     company = input("\nCompany: ")
     position = input("\nPosition: ")
-    status = input("\nStatus: ")
+
+    print("\nValid statuses:")
+    for status in Application.statuses:
+        print(f"- {status}")
+
     date_applied = input("\nDate applied: ")
     job_url = input("\nJob URL: ")
     notes = input("\nNotes: ")
     id_app = tracker.next_id()
 
-    application = Application(
-        id_app,
-        company,
-        position,
-        status,
-        date_applied,
-        job_url,
-        notes    
-    )
+    while True:
+        status = input("\nStatus: ")
+        try:
+            application = Application(
+                id_app,
+                company,
+                position,
+                status,
+                date_applied,
+                job_url,
+                notes
+            )
+            break
+        except ValueError:
+            print("Invalid status. Please try again.")
 
     tracker.add(application)
     save_applications(tracker.applications, "applications.json")
