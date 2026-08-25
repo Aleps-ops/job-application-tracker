@@ -179,3 +179,89 @@ def test_search_by_position():
     tracker.add(application)
     result = tracker.search("engineer")
     assert result == "1. Google - Software Engineer Intern - Applied" in result
+
+def test_tracker_with_existing_applications():
+    application = Application(
+        1,
+        "Google",
+        "Software Engineer Intern",
+        "Applied",
+        "2026-08-21",
+        "https://careers.google.com",
+        ""
+    )
+
+    tracker = Tracker([application])
+
+    assert tracker.applications == [application]
+
+def test_list_applications_empty():
+    tracker = Tracker()
+
+    assert tracker.list_applications() == "No applications found."
+
+def test_next_id():
+    tracker = Tracker()
+    application_id = tracker.next_id()
+
+    assert application_id == 1
+
+def test_next_id_with_applications():
+    application1 = Application(
+        1,
+        "Google",
+        "Software Engineer Intern",
+        "Applied",
+        "2026-08-21",
+        "https://careers.google.com",
+        ""
+    )
+
+    application2 = Application(
+        2,
+        "Microsoft",
+        "Software Engineer Intern",
+        "OA",
+        "2026-08-21",
+        "https://careers.microsoft.com",
+        ""
+    )
+
+    tracker = Tracker([application1, application2])
+
+    assert tracker.next_id() == 3
+
+def test_next_id_with_non_consecutive_ids():
+    application1 = Application(
+        1,
+        "Google",
+        "Software Engineer Intern",
+        "Applied",
+        "2026-08-21",
+        "https://careers.google.com",
+        ""
+    )
+
+    application2 = Application(
+        3,
+        "Microsoft",
+        "Software Engineer Intern",
+        "OA",
+        "2026-08-21",
+        "https://careers.microsoft.com",
+        ""
+    )
+
+    application3 = Application(
+        7,
+        "Amazon",
+        "Software Engineer Intern",
+        "Interview",
+        "2026-08-21",
+        "https://careers.amazon.com",
+        ""
+    )
+
+    tracker = Tracker([application1, application2, application3])
+
+    assert tracker.next_id() == 8

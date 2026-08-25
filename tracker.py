@@ -1,13 +1,19 @@
 from application import Application
 
 class Tracker:
-    def __init__(self):
-        self.applications = []
+    def __init__(self, applications = None):
+        if applications is None:
+            applications = []
+
+        self.applications = applications
 
     def add(self, application: Application):
         self.applications.append(application)
 
     def list_applications(self):
+        if not self.applications:
+            return "No applications found."
+
         return "\n".join(
             f"{application.id}. {application}"
             for application in self.applications
@@ -43,3 +49,9 @@ class Tracker:
             f"{result.id}. {result}" 
             for result in results
         )
+
+    def next_id(self):
+        if not self.applications:
+            return 1
+
+        return max(application.id for application in self.applications) + 1

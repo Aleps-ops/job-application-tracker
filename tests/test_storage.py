@@ -50,3 +50,10 @@ def test_load_applications(tmp_path):
     assert applications[0].company == "Google"
     assert applications[0].position == "Software Engineer Intern"
     assert applications[0].status == "Applied"
+
+def test_load_applications_file_not_found(tmp_path):
+    filename = tmp_path / "does_not_exist.json"
+
+    applications = load_applications(filename)
+
+    assert applications == []
