@@ -27,6 +27,17 @@ def main():
 
         if choice == "2":
             add_application(tracker)
+
+        if choice == "3":
+            query = input("\nSearch: ")
+            print()
+            print(tracker.search(query))
+
+        if choice == "4":
+            update_application(tracker)
+
+        if choice == "5":
+            delete_application(tracker)
     
 
 def add_application(tracker):
@@ -59,6 +70,36 @@ def add_application(tracker):
             print("Invalid status. Please try again.")
 
     tracker.add(application)
+    save_applications(tracker.applications, "applications.json")
+
+def update_application(tracker):
+    application_id = int(input("\nApplication ID: "))
+
+    print("\nValid statuses:")
+    for status in Application.statuses:
+        print(f"- {status}")
+
+    status = input("\nNew status: ")
+
+    try:
+        tracker.update_status(application_id, status)
+    except ValueError as error:
+        print(f"\nError: {error}")
+        return
+
+    tracker.update_status(application_id, status)
+    save_applications(tracker.applications, "applications.json")
+
+def delete_application(tracker):
+    application_id = int(input("\nApplication ID: "))
+
+    try:
+        tracker.delete(application_id)
+    except ValueError as error:
+        print(f"\nError: {error}")
+        return
+
+    print("\nApplication deleted successfully.")
     save_applications(tracker.applications, "applications.json")
 
 if __name__ == "__main__":
