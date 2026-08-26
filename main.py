@@ -24,29 +24,27 @@ def main():
         if choice == "1":
             print()
             print(tracker.list_applications())
-
-        if choice == "2":
+        elif choice == "2":
             add_application(tracker)
-
-        if choice == "3":
+        elif choice == "3":
             query = input("\nSearch: ")
             print()
             print(tracker.search(query))
-
-        if choice == "4":
+        elif choice == "4":
             update_application(tracker)
-
-        if choice == "5":
+        elif choice == "5":
             delete_application(tracker)
+        elif choice == "6":
+            print("Goodbye!")
+        else:
+            print("Invalid option.")
     
 
 def add_application(tracker):
     company = input("\nCompany: ")
     position = input("\nPosition: ")
 
-    print("\nValid statuses:")
-    for status in Application.statuses:
-        print(f"- {status}")
+    print_valid_statuses()
 
     date_applied = input("\nDate applied: ")
     job_url = input("\nJob URL: ")
@@ -73,11 +71,13 @@ def add_application(tracker):
     save_applications(tracker.applications, "applications.json")
 
 def update_application(tracker):
-    application_id = int(input("\nApplication ID: "))
+    try:
+        application_id = int(input("\nApplication ID: "))
+    except ValueError:
+        print("\nInvalid ID. Please enter a number.")
+        return
 
-    print("\nValid statuses:")
-    for status in Application.statuses:
-        print(f"- {status}")
+    print_valid_statuses()
 
     status = input("\nNew status: ")
 
@@ -87,11 +87,14 @@ def update_application(tracker):
         print(f"\nError: {error}")
         return
 
-    tracker.update_status(application_id, status)
     save_applications(tracker.applications, "applications.json")
 
 def delete_application(tracker):
-    application_id = int(input("\nApplication ID: "))
+    try:
+        application_id = int(input("\nApplication ID: "))
+    except ValueError:
+        print("\nInvalid ID. Please enter a number.")
+        return
 
     try:
         tracker.delete(application_id)
@@ -101,6 +104,11 @@ def delete_application(tracker):
 
     print("\nApplication deleted successfully.")
     save_applications(tracker.applications, "applications.json")
+
+def print_valid_statuses():
+    print("\nValid statuses:")
+    for status in Application.statuses:
+        print(f"- {status}")
 
 if __name__ == "__main__":
     main()
